@@ -128,6 +128,52 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
+  double getProductsPrice(List<CartItemModel> productsCart) {
+    double price = 0.0;
+    for (CartItemModel c in productsCart) {
+      if (c.product != null) price += c.quantity * c.product.price;
+    }
+    return price;
+  }
+
+  Future<String> finishOrder(
+    List<CartItemModel> productsCart,
+    AddressModel addressModel,
+  ) async {
+    if (productsCart.length == 0) return null;
+
+    double totalPrice = getProductsPrice(productsCart);
+
+    DocumentReference refOrder =
+        await FirebaseFirestore.instance.collection("orders").add({
+      "clientId": user.id,
+      "products": productsCart
+          .map((productsCart) => productsCart.toOrderItemMap())
+          .toList(),
+      "totalPrice": totalPrice,
+      "address": addressModel.toMap(),
+    });
+
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.id)
+        .collection("orders")
+        .doc(refOrder.id)
+        .set({"orderId": refOrder.id});
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.id)
+        .collection("cart")
+        .get();
+
+    for (DocumentSnapshot doc in querySnapshot.docs) {
+      doc.reference.delete();
+    }
+
+    productsCart.clear();
+  }
+
   setLoading(bool value) {
     _loading = value;
     notifyListeners();

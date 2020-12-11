@@ -1,5 +1,6 @@
 import 'package:ecommerce/providers/user_provider.dart';
 import 'package:ecommerce/utils/routes.dart';
+import 'package:ecommerce/widgets/order/list_order.dart';
 import 'package:ecommerce/widgets/user/user_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,20 +47,35 @@ class UserPageView extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Expanded(
-              child: Container(
-                color: Colors.grey[200],
-                child: Column(
-                  children: [
-                    UserMenuItem(
-                      onPressed: _userProvider.signOut,
-                      label: "Sair",
-                      icon: Icons.exit_to_app,
-                    ),
-                  ],
-                ),
+            Container(
+              margin: EdgeInsets.only(bottom: 12.0),
+              color: Colors.grey[200],
+              child: Column(
+                children: [
+                  UserMenuItem(
+                    onPressed: _userProvider.signOut,
+                    label: "Sair",
+                    icon: Icons.exit_to_app,
+                  ),
+                ],
               ),
             ),
+            GestureDetector(
+
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ListOrder())
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Icon(Icons.list, size: 36.0),
+                  Text("VISUALIZAR PEDIDOS", style: TextStyle(fontSize: 18.0)),
+                ],
+              ),
+            ),
+
           ],
         ),
       );

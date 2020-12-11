@@ -60,7 +60,7 @@ class CartBody extends StatelessWidget {
             shrinkWrap: true,
             itemCount: _cartProvider.items.length,
             itemBuilder: (_, index) {
-              return CartItem(_cartProvider.items[index]);
+              return CartItem(_cartProvider?.items[index]);
             },
           ),
           const SizedBox(

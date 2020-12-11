@@ -31,6 +31,14 @@ class CartItemModel extends ChangeNotifier {
     return {'pid': productId, 'quantity': quantity};
   }
 
+  Map<String, dynamic> toOrderItemMap() {
+    return{
+      "pid": productId,
+      "quantity": quantity,
+      "product": product.toResumedMap(),
+    };
+  }
+
   bool existsProductInCart(ProductModel product) {
     return product.id == productId;
   }

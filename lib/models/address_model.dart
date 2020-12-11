@@ -18,4 +18,16 @@ class AddressModel {
     city = viaCepDTO.localidade;
     state = viaCepDTO.uf;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "zipCode": zipCode??"",
+      "street": street??"",
+      "number": number??"",
+      "district": district??"",
+      "city": city??"",
+      "state": state??"",
+      "complement": complement??"",
+    };
+  }
 }

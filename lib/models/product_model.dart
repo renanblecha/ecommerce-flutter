@@ -26,6 +26,14 @@ class ProductModel {
     };
   }
 
+  Map<String, dynamic> toResumedMap() {
+    return {
+      "name": name,
+      "price": price,
+      "description": description,
+    };
+  }
+
   @override
   String toString() {
     return 'Product{id: $id, name: $name, description: $description, price: $price, images: $images}';

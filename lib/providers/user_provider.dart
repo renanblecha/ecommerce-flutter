@@ -7,9 +7,14 @@ class UserProvider extends ChangeNotifier {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   UserModel _currentUser;
+  List<dynamic> orders = [];
 
   UserProvider() {
     loadCurrentUser();
+  }
+
+  Future<List> getOrders() async {
+
   }
 
   Future<void> loadCurrentUser() async {
